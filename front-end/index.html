@@ -19,6 +19,12 @@
 
   <h1>Amazing Noise-meter</h1>
   <div id="tester" style="width:800px;height:500px;"></div>
+  <input type="checkbox" id="date" name="date" value="date">
+  <label for="date">Change date</label>
+  <p>
+    Small prototype using leaflet. Final goal would be to be able to select the date you wish to use, and then show all values fetched at this date. Data should be
+    pulled from a distributed database through a simple api. 
+  </p>
   <script>
     var mymap = L.map('tester').setView([48.117071, -1.639460], 16);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -28,7 +34,7 @@
 	accessToken: 'pk.eyJ1Ijoia2xlbSIsImEiOiJjazFxeWZzZnQwMjBuM2xycWV5NGNkejFrIn0.6d2s4vIOcXLI88RUjq5KOA'
     }).addTo(mymap);
 
-    function addCircle(lon, lat, size){
+    function addCircle(layer, lon, lat, size){
 	var col='green'
 	
 	if(size>90){
@@ -44,14 +50,46 @@
 	    fillColor: col,
 	    fillOpacity: 0.5,
 	    radius: size
-	}).addTo(mymap);
+	}).addTo(layer);
 	circle.bindPopup("Values measured:<br/>Longitude: "+lon+"<br/>Lattitude: "+lat+"<br/>Sound sensor: "+size+" dB");
     }
 
+    
+    /*
+     JUST FOR THE DEMO
+     */
+    var layer1 = L.layerGroup();
     points = [[48.117071, -1.639460, 100],[48.116093, -1.636386,20],[48.115040, -1.639862,60], [48.115337, -1.637794,80]];
     for(var i=0;i<points.length;i++){
-	addCircle(points[i][0],points[i][1], points[i][2]);
+	addCircle(layer1,points[i][0],points[i][1], points[i][2]);
     }
+
+    var layer2 = L.layerGroup();
+    points = [[48.117071, -1.639460, 40],[48.116093, -1.636386,70],[48.115040, -1.639862,55], [48.115337, -1.637794,99]];
+    for(var i=0;i<points.length;i++){
+	addCircle(layer2,points[i][0],points[i][1], points[i][2]);
+    }
+
+    mymap.addLayer(layer1);
+    var activelayer=0;
+    function onMapClick(e) {
+	//alert("a")
+	if(!activelayer){
+	    mymap.removeLayer(layer1);
+	    mymap.addLayer(layer2);
+	    activelayer=1;
+	}else{
+	    mymap.removeLayer(layer2);
+	    mymap.addLayer(layer1);
+	    activelayer=0;	    
+	}
+    }
+
+    document.getElementById('date').onclick = onMapClick;
+
+    /*
+     END OF DEMO
+     */
   </script>
 </body>
 

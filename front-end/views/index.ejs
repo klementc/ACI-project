@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<head>
+  <title>plots mockup</title>
+  <style>
+#timechoice{width:50%; margin:auto auto;}  
+#tester{ width:50%; margin: auto auto;}
+input{text-align:center;margin:auto auto;}
+input[type=range] {
+  height: 32px;
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+  }
+  input[type=range]:focus {
+  outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 16px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #B6B6B6;
+  border-radius: 25px;
+  border: 1px solid #8A8A8A;
+  }
+  input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #828282;
+  border: 1px solid #8A8A8A;
+  height: 24px;
+  width: 35px;
+  border-radius: 6px;
+  background: #DADADA;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5px;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #B6B6B6;
+  }
+  input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 16px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #B6B6B6;
+  border-radius: 25px;
+  border: 1px solid #8A8A8A;
+  }
+  input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #828282;
+  border: 1px solid #8A8A8A;
+  height: 24px;
+  width: 35px;
+  border-radius: 6px;
+  background: #DADADA;
+  cursor: pointer;
+  }
+  input[type=range]::-ms-track {
+  width: 100%;
+  height: 16px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+  }
+  input[type=range]::-ms-fill-lower {
+  background: #B6B6B6;
+  border: 1px solid #8A8A8A;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000;
+  }
+  input[type=range]::-ms-fill-upper {
+  background: #B6B6B6;
+  border: 1px solid #8A8A8A;
+  border-radius: 50px;
+  box-shadow: 0px 0px 0px #000000;
+  }
+  input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 1px 1px 1px #828282;
+  border: 1px solid #8A8A8A;
+  height: 24px;
+  width: 35px;
+  border-radius: 6px;
+  background: #DADADA;
+  cursor: pointer;
+  }
+  input[type=range]:focus::-ms-fill-lower {
+  background: #B6B6B6;
+  }
+  input[type=range]:focus::-ms-fill-upper {
+  background: #B6B6B6;
+  }
+</style>
+  <script src="plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin=""/>
+
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+	  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+	  crossorigin="">
+  </script>
+
+
+</head>
+
+<body>
+
+  <h1>Amazing Noise-meter</h1>
+  <p>
+    Small prototype using leaflet. Final goal would be to be able to select the date you wish to use, and then show all values fetched at this date. Data should be
+    pulled from a distributed database through a simple api. 
+  </p>
+
+
+  <div id="tester" style="width:800px;height:500px;"></div>
+
+  <script>
+    var mymap = L.map('tester').setView([48.117071, -1.639460], 16);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	maxZoom: 18,
+	id: 'mapbox.streets',
+	accessToken: 'pk.eyJ1Ijoia2xlbSIsImEiOiJjazFxeWZzZnQwMjBuM2xycWV5NGNkejFrIn0.6d2s4vIOcXLI88RUjq5KOA'
+    }).addTo(mymap);
+
+    function addCircle(layer, lon, lat, size){
+	var col='green'
+	
+	if(size>90){
+	    col="red";
+	}else if(size>70){
+	    col="orange";
+	}else if(size>50){
+	    col="yellow";
+	}
+	
+	var circle = L.circle([lon, lat], {
+	    color: 'black',
+	    fillColor: col,
+	    fillOpacity: 0.5,
+	    radius: size
+	}).addTo(layer);
+	circle.bindPopup("Values measured:<br/>Longitude: "+lon+"<br/>Lattitude: "+lat+"<br/>Sound sensor: "+size+" dB");
+    }
+
+    
+    /*
+     JUST FOR THE DEMO
+     */
+    var layer1 = L.layerGroup();
+    points = "<%= v %>".split(",").map(v => parseFloat(v));;
+
+    for(var i=0;i<points.length;i+=3){
+    	console.log(points[i]+" "+points[i+1]+" "+points[i+2]);
+	addCircle(layer1,points[i],points[i+1], points[i+2]);
+    }
+
+    
+    mymap.addLayer(layer1);
+    
+    /*
+    var activelayer=0;
+    function onMapClick(e) {
+	//alert("a")
+	if(!activelayer){
+	    mymap.removeLayer(layer1);
+	    mymap.addLayer(layer2);
+	    activelayer=1;
+	}else{
+	    mymap.removeLayer(layer2);
+	    mymap.addLayer(layer1);
+	    activelayer=0;	    
+	}
+    }
+    
+    document.getElementById('date').onclick = onMapClick;
+    */
+    /*
+     END OF DEMO
+     */
+  </script>
+
+<div id="timechoice">
+     <form method="get" action="">
+     <input value="<%= time %>" name="t" type="range" min="-10" max="10">
+     <input type="submit" value="Enregistrer">
+     </form>
+ </div>
+     
+</body>
+
+
+

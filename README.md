@@ -40,3 +40,67 @@ connected to the internet and not only to an adhoc with other raspis)...
 * Containers: docker
 * Automatic deployment: ansible/kubernetes
 * Tests: unit tests for each service, continuous integration, ??chaos tests??
+
+
+# FRONT-End
+
+to use it, you need nodejs, npm.
+go in the front-end directory: `npm install`
+to launch: `node app.js`
+then in your browser go to: localhost:8080
+
+You should be able to see the prototype with random values.
+
+## Test with a redis node
+You can also start a redis node to try it. To do so, you need redis installed,
+after that, create a directory for your reddis node:
+`mkdir 7000 && cd 7000`
+in this directory:
+`touch redis.conf`
+inside this file, paste:
+
+```
+port 7000
+appendonly yes
+protected-mode no
+
+```
+
+to start the node: 
+`
+./redis-server redis.conf
+`
+
+then start the app. Because it's just test for now the app first populates the
+database with random values. (keys -10 to 10)
+Then to see the values returned by redis in your browser, append the v parameter
+to the url:
+```
+http://127.0.0.1:8080/sound/1?t=-6&v=1
+```
+will bring you to the -6 time period, and show the corresponding values for this
+period
+
+
+if you want to see the values from your terminal:
+```
+$ ./redis-cli -p 7000
+127.0.0.1:7000> lrange -6 0 -1
+ 1) "48.1181395"
+ 2) "-1.6427055"
+ 3) "19.6"
+ 4) "48.1160038"
+ 5) "-1.6420282"
+ 6) "96.5"
+ 7) "48.1183599"
+ 8) "-1.6399714"
+ 9) "44.1"
+10) "48.1150897"
+11) "-1.6445011"
+12) "88"
+13) "48.116957"
+14) "-1.6348023"
+15) "59.4"
+
+-values should change for you-
+```

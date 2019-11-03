@@ -104,3 +104,17 @@ $ ./redis-cli -p 7000
 
 -values should change for you-
 ```
+
+## With docker
+
+build the dockerfile within the front-end directory: 
+```
+docker build . -t namefrontend
+```
+to run it:
+```
+docker run -p 8080:8080 --network=host fe:latest
+```
+
+now you can access your node from your browser the same way as before, except it runs within the container
+

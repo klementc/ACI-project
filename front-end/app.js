@@ -3,7 +3,7 @@ var session = require('cookie-session');
 var bodyparser = require('body-parser')
 
 var Redis = require("ioredis");
-var redis = new Redis(7000);
+var redis = new Redis(7000, "0.0.0.0");
 
 /*redis test*/
 redis.set("glagla", "gloglo");
@@ -44,7 +44,7 @@ function randMetrics(nb){
 
 app.use(session({secret: 'mysoundsecret'}))
 
-app.get('/sound/:time',async function (req, res) {
+app.get('/sound',async function (req, res) {
 
     var m = [];
     if(req.query.v){
@@ -83,6 +83,6 @@ async function init(){
 
 init();
 
-app.listen(8080);
+app.listen(8080, "0.0.0.0");
 
 

@@ -118,3 +118,9 @@ docker run -p 8080:8080 --network=host fe:latest
 
 now you can access your node from your browser the same way as before, except it runs within the container
 
+# Start redis container
+
+to start the redis container (it will run listen on port 7000):
+```
+cd redis && docker build . -t rd && docker run -p 7000:7000 rd
+```

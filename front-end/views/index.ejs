@@ -184,11 +184,20 @@ input[type=range] {
     /*
      END OF DEMO
      */
-  </script>
+
+    /*ar c = document.getElementById("t")
+    c.addEventListener("change", function() {
+	//document.getElementById("rangevalue").textContent = rangeInput.value;
+	//}, false);
+	document.getElementById("choice").submit();
+*/
+    </script>
 
 <div id="timechoice">
-     <form method="get" action="">
-     <input value="<%= time %>" name="t" type="range" min="-10" max="10">
+     <form id="choice" method="get" action="">
+       <input id="t" value="<%= time %>" name="t" type="range" min="-10" max="10" onchange="document.getElementById('choice').submit()">
+       <input type="checkbox" id="v" name="v" checked="true">
+       <label for="v">Redis values</label>
      <input type="submit" value="Enregistrer">
      </form>
  </div>

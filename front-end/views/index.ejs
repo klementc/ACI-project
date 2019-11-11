@@ -130,21 +130,27 @@ input[type=range] {
     }).addTo(mymap);
 
     function addCircle(layer, lon, lat, size){
+	var t = 0;
 	var col='green'
-	
-	if(size>90){
+	//window.alert(size);
+	if(size<0){
 	    col="red";
-	}else if(size>70){
+	    t=70+(-size);
+	}
+	if(size<-10){
 	    col="orange";
-	}else if(size>50){
+	    t=40+(-size);
+	}
+	if(size<-20){
 	    col="yellow";
+	    t=10+(-size);
 	}
 	
 	var circle = L.circle([lon, lat], {
 	    color: 'black',
 	    fillColor: col,
 	    fillOpacity: 0.5,
-	    radius: size
+	    radius: t
 	}).addTo(layer);
 	circle.bindPopup("Values measured:<br/>Longitude: "+lon+"<br/>Lattitude: "+lat+"<br/>Sound sensor: "+size+" dB");
     }

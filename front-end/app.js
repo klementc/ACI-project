@@ -13,8 +13,8 @@ var minLong=48.118825;
 var maxLong=48.114069;
 var minLat =-1.648055;
 var maxLat =-1.633960;
-var minDB = 10;
-var maxDB = 100;
+var minDB = -40;
+var maxDB = 0;
 
 
 
@@ -84,7 +84,7 @@ async function init(){
 	    //console.log(v)
             if(!v.length){
 		
-		for(var i=0;i<2;i++){
+		for(var i=0;i<5;i++){
 		    var j = randMetrics(0,10);
 		    //console.log(j.length)
 		    redis.call("TS.CREATE", j[0],"LABELS","m","1");

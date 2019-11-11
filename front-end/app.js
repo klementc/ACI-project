@@ -49,8 +49,12 @@ app.get('/sound',async function (req, res) {
     var m = [];
     if(req.query.v){
 	try {
+	    console.log(Date.parse(req.query.from));
+	    console.log(Date.parse(req.query.to));
+	    
             //m = await redis.lrange(req.query.t, 0, -1);
-	    m = await redis.call("TS.MRANGE",parseInt(req.query.t),parseInt(req.query.t),"FILTER","m=1");
+	    m = await redis.call("TS.MRANGE",Date.parse(req.query.from)/1000,Date.parse(req.query.to)/1000,"FILTER","m=1");
+	    console.log(m)
 	    var r=""
 	    for(var i=0;i<m.length;i++){
 		d=m[i][0].split(":");

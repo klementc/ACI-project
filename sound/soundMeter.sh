@@ -25,7 +25,7 @@ do
 		echo "key: sound:$loc"
 		echo "timestamp: $timestamp"
                 echo "$sndfileInfo" >> "$destdir"
-		echo `redis-cli -p 6379 TS.ADD sound:${loc} $timestamp $sndfileInfo`
+		echo `redis-cli -p 6379 -h 176.139.14.235 TS.ADD sound:${loc} $timestamp $sndfileInfo`
         fi
 
         echo `rm record.wav`

@@ -3,7 +3,7 @@ var session = require('cookie-session');
 var bodyparser = require('body-parser')
 
 var Redis = require("ioredis");
-var redis = new Redis(6379, "0.0.0.0");
+var redis = new Redis(6379,"176.139.14.235" /*"0.0.0.0"*/);
 
 /*redis test*/
 redis.set("glagla", "gloglo");

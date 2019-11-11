@@ -3,7 +3,7 @@ var session = require('cookie-session');
 var bodyparser = require('body-parser')
 
 var Redis = require("ioredis");
-var redis = new Redis(7000, "0.0.0.0");
+var redis = new Redis(6379, "0.0.0.0");
 
 /*redis test*/
 redis.set("glagla", "gloglo");
@@ -30,13 +30,13 @@ function genRand(min, max, decimalPlaces) {
     return Math.floor(rand*power) / power;
 }
 
-function randMetrics(nb){
+function randMetrics(tmin,tmax){
     var m = [];
-    for (var i = 0; i<nb;i++){
-	console.log(genRand(4,5,10));
-	m.push(genRand(minLong, maxLong,7));
-	m.push(genRand(minLat, maxLat, 7));
-	m.push(genRand(minDB, maxDB, 1));
+    m.push("sound:"+genRand(minLong, maxLong,7)+":"+genRand(minLat, maxLat, 7));
+
+    for (var i = tmin; i<=tmax;i++){
+	//console.log(genRand(4,5,10));
+	m.push([i, genRand(minDB, maxDB, 1)]);
 
     }
     return m;
@@ -49,16 +49,29 @@ app.get('/sound',async function (req, res) {
     var m = [];
     if(req.query.v){
 	try {
-        m = await redis.lrange(req.query.t, 0, -1);
+            //m = await redis.lrange(req.query.t, 0, -1);
+	    m = await redis.call("TS.MRANGE",parseInt(req.query.t),parseInt(req.query.t),"FILTER","m=1");
+	    var r=""
+	    for(var i=0;i<m.length;i++){
+		d=m[i][0].split(":");
+		lo=d[1];
+		la=d[2];
+		for (var j=0;j<m[i][2].length;j++){
+		    r+=lo+","+la+","+m[i][2][j][1]+",";
+		}
+		
+	    }
+	    console.log(r)
+	    //console.log(m[0][2]);
+	    //console.log(m.length)
 	} catch (error) {
             console.error(error);
 	}
-	console.log(m);
     }else{
 	m = randMetrics(1);
     }
     
-    res.render("index.ejs", {v:m, time: req.query.t});
+    res.render("index.ejs", {v:r, time: req.query.t});
     //console.log(m);
 
     
@@ -66,23 +79,30 @@ app.get('/sound',async function (req, res) {
 
 async function init(){
 
-    for(var i=-10;i<=10;i++){
 	try {
-            var v = await redis.lrange(i.toString(), 0, -1);
-	    console.log(v)
+            var v = await redis.call("TS.MRANGE","0","10","FILTER","m=1");
+	    //console.log(v)
             if(!v.length){
-		var j = randMetrics(5);
-		console.log("adding init values");
-		redis.rpush(i.toString(), ...j);
+		
+		for(var i=0;i<2;i++){
+		    var j = randMetrics(0,10);
+		    //console.log(j.length)
+		    redis.call("TS.CREATE", j[0],"LABELS","m","1");
+		    for(var k=1;k<j.length;k++){
+			console.log("TS.ADD"+ j[0]+" "+ j[k][0]+" "+ j[k][1]);
+			redis.call("TS.ADD", j[0], j[k][0], j[k][1]);
+		    }
+		}
+		//console.log("adding init values");
+		//redis.rpush(i.toString(), ...j);
 	    }
 	} catch (error) {
             console.error(error);
 	}
-    }
 }
 
+//console.log(randMetrics(0,10,3));
 init();
-
 app.listen(8080, "0.0.0.0");
 
 

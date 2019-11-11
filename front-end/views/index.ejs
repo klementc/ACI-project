@@ -155,8 +155,8 @@ input[type=range] {
      */
     var layer1 = L.layerGroup();
     points = "<%= v %>".split(",").map(v => parseFloat(v));;
-
-    for(var i=0;i<points.length;i+=3){
+    //window.alert("<%= v %>");
+    for(var i=0;i<points.length-1;i+=3){
     	console.log(points[i]+" "+points[i+1]+" "+points[i+2]);
 	addCircle(layer1,points[i],points[i+1], points[i+2]);
     }

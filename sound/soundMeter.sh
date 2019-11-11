@@ -8,7 +8,7 @@ destdir=/home/pi/soundMeter/dBValues.txt
 loc="48.118169599999995:-1.6859136"
 
 #create the redis timeseries
-echo `redis-cli -p 6379 TS.CREATE sound:${loc} LABELS m 1`
+echo `redis-cli -p 6379 -h 176.139.14.235 TS.CREATE sound:${loc} LABELS m 1`
 
 while true
 do

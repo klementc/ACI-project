@@ -9,11 +9,12 @@ do
 
         record=`arecord -D plughw:1,0 -d $1 record.wav`
 
-        sndfileInfo=`sndfile-info record.wav | grep -oP "(-\d{2}\.\d{2})"`
+        sndfileInfo=`sndfile-info record.wav | grep -oP "(-\d{1,2}\.\d{1,2})"`
 
 
         if [ -f "$destdir" ]
         then
+		echo "val:$sndfileInfo"
                 echo "$sndfileInfo" >> "$destdir"
                 echo "done"
         fi

@@ -2,6 +2,13 @@
 
 Project to monitor sound sensors in the fog.
 
+# Docker containers link
+https://hub.docker.com/u/klementc
+Examples:
+docker run -p 6379:6379 klementc/redistimeseriesraspberry:latest
+docker run --network=host  klementc/front-end localhost 6379
+docker run soundmeter 0.0.0.0 6379 -1818:228 10
+
 # Ideas:
 
 ## Architecture:

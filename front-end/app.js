@@ -3,7 +3,18 @@ var session = require('cookie-session');
 var bodyparser = require('body-parser')
 
 var Redis = require("ioredis");
-var redis = new Redis(6379,"176.139.14.235" /*"0.0.0.0"*/);
+
+if(process.argv.length != 4){
+	console.log("node app.js <ipdb> <portdb>");
+	console.log("ipdb: 0.0.0.0 for local db");
+	console.log("portdb: 6379 usually");
+	process.exit(0);
+}
+
+const ipdb = process.argv[2];
+const portdb = process.argv[3];
+
+var redis = new Redis(portdb /*6379*/, ipdb /*"176.139.14.235""0.0.0.0"*/);
 
 /*redis test*/
 redis.set("glagla", "gloglo");

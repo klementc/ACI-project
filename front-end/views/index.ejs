@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<head>
+  <title>plots mockup</title>
+  <style>
+    html, body{padding:0px 0px;;margin:0px 0px;background-color:#FAFAFA;}
+    #timechoice{margin: 15px; padding: 15px;background-color: #ffcccc;
+		border:2px solid black;
+		border-radius: 16px;width:50%; margin:auto auto;
+		} 
+    #tester{ width:70%; margin: auto auto;margin-bottom:20px;}
+input{text-align:center;margin:auto auto;}
+#header{margin:0px;padding:0px;background-color:#ffcccc;
+	border-bottom:3px solid black;}
+#header:hover{background-color:#ffb3b3;}
+#header h1 {margin:0;font-size: 3em;}
+</style>
+  <script src="plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin=""/>
+
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+	  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+	  crossorigin="">
+  </script>
+
+
+</head>
+
+<body>
+  <div id="header">
+    <h1>Amazing Noise-meter</h1>
+  </div>
+  
+  <p>
+    Small prototype using leaflet. Data is fetched from a redis database and shown on the map below. Use the textboxes to select data from a specific time interval and click save.<br/>Made for the ACI class project.
+  </p>
+
+  <hr>
+
+  <div id="tester" style="width:800px;height:500px;"></div>
+
+  <script>
+    var mymap = L.map('tester').setView([48.117071, -1.639460], 16);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	maxZoom: 18,
+	id: 'mapbox.streets',
+	accessToken: 'pk.eyJ1Ijoia2xlbSIsImEiOiJjazFxeWZzZnQwMjBuM2xycWV5NGNkejFrIn0.6d2s4vIOcXLI88RUjq5KOA'
+    }).addTo(mymap);
+
+    function addCircle(layer, lon, lat, size){
+	var t = 0;
+	var col='green'
+	//window.alert(size);
+	if(size<0){
+	    col="red";
+	    t=70+(-size);
+	}
+	if(size<-10){
+	    col="orange";
+	    t=40+(-size);
+	}
+	if(size<-20){
+	    col="yellow";
+	    t=10+(-size);
+	}
+	
+	var circle = L.circle([lon, lat], {
+	    color: 'black',
+	    fillColor: col,
+	    fillOpacity: 0.5,
+	    radius: t
+	}).addTo(layer);
+	circle.bindPopup("Values measured:<br/>Longitude: "+lon+"<br/>Lattitude: "+lat+"<br/>Sound sensor: "+size+" dB");
+    }
+
+    
+    /*
+     JUST FOR THE DEMO
+     */
+    var layer1 = L.layerGroup();
+    points = "<%= v %>".split(",").map(v => parseFloat(v));;
+    //window.alert("<%= v %>");
+    for(var i=0;i<points.length-1;i+=3){
+    	console.log(points[i]+" "+points[i+1]+" "+points[i+2]);
+	addCircle(layer1,points[i],points[i+1], points[i+2]);
+    }
+
+    
+    mymap.addLayer(layer1);
+    
+    /*
+    var activelayer=0;
+    function onMapClick(e) {
+	//alert("a")
+	if(!activelayer){
+	    mymap.removeLayer(layer1);
+	    mymap.addLayer(layer2);
+	    activelayer=1;
+	}else{
+	    mymap.removeLayer(layer2);
+	    mymap.addLayer(layer1);
+	    activelayer=0;	    
+	}
+    }
+    
+    document.getElementById('date').onclick = onMapClick;
+    */
+    /*
+     END OF DEMO
+     */
+
+    /*ar c = document.getElementById("t")
+    c.addEventListener("change", function() {
+	//document.getElementById("rangevalue").textContent = rangeInput.value;
+	//}, false);
+	document.getElementById("choice").submit();
+*/
+    </script>
+
+<div id="timechoice">
+     <form id="choice" method="get" action="">
+       <!--<input id="t" value="<%= time %>" name="t" type="range" min="-10" max="10" onchange="document.getElementById('choice').submit()">-->
+       <input hidden="true" type="checkbox" id="v" name="v" checked="true">
+       <!--<label for="v">Redis values</label>-->
+
+       <br/>
+       <label for="from">From:</label><br/>
+       <input type="datetime-local" id="from" name="from" value="1970-01-01T00:00:00Z"/>
+       <br/>
+       <label for="to">To:</label><br/>
+       <input type="datetime-local" id="to" name="to" value="2019-11-11T17:40:07Z"/>
+       
+       <input type="submit" value="Enregistrer">
+     </form>
+ </div>
+     
+</body>
+
+
+

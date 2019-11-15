@@ -1,0 +1,22 @@
+---
+    - name: Set a new password for the default "pi" account
+      become: yes
+      user:
+          name: "pi"
+          password: "!"
+
+    - name: Create aci user
+      become: yes
+      user:
+          name: "aci"
+          shell: /bin/bash
+          createhome: yes
+          # comment: "{{ comment }}"
+          groups: sudo,audio,video,users,input,netdev
+          password: "{{ password }}"
+
+    - name: Deploy user's SSH key
+      become: yes
+      authorized_key:
+          user: "aci"
+          key: "{{ lookup('file', '{{ public_key }}') }}"

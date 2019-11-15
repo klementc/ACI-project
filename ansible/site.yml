@@ -1,0 +1,25 @@
+---
+- name: Start
+  hosts: all
+  become: yes
+  roles:
+    - user-setup
+    - network-config
+    - iptables-rules
+
+  vars_prompt:
+  #   - name: "hostname"
+      # prompt: "Hostname"
+      # private: no
+    # - name: "username"
+    #   prompt: "User name"
+      # private: no
+    - name: "password"
+      prompt: "Password"
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+    - name: "public_key"
+      prompt: "Path to public SSH key"
+      private: no
+

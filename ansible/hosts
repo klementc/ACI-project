@@ -1,0 +1,18 @@
+[rasp1]
+raspberrypi1 ansible_user=pi
+
+[rasp1:vars]
+ipaddr=192.168.201.1
+
+
+[rasp2]
+raspberrypi3 ansible_user=pi
+
+[rasp2:vars]
+ipaddr=192.168.202.1
+
+[rasp3]
+raspberrypi2 ansible_user=pi
+
+[rasp3:vars]
+ipaddr=192.168.203.1

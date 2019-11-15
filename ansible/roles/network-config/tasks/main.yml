@@ -1,0 +1,98 @@
+---
+- name: Installing packages
+  package:
+    update_cache: true
+    name:
+      - hostapd
+      - dnsmasq
+      - dhcpd
+      - iptables-persistent
+      - quagga
+      - libsndfile
+    state: present
+
+- name: Installing Driver
+  become: true
+  script: templates/RPi-install-wifi.sh
+
+# - name: Setup Virtual Interface
+#   copy:
+#     src: templates/90-wireless.rules
+#     dest: /etc/udev/rules.d/90-wireless.rules
+#     owner: aci
+
+- name: Config access point
+  copy:
+    src: templates/ap
+    dest: /etc/network/interfaces.d/ap
+    owner: aci
+
+- name: Indicating the position of hostapd
+  copy:
+    src: templates/hostapd
+    dest: /etc/default/hostapd
+    owner: aci
+
+- name: Config hostapd
+  copy:
+    src: templates/hostapd.conf
+    dest: /etc/hostapd/hostapd.conf
+    owner: aci
+
+- name: Config dnsmasq
+  copy:
+    src: templates/dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    owner: aci
+
+- name: Config wpa_supplicant
+  copy:
+    src: templates/wpa_supplicant-wlan0.conf
+    dest: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+    owner: aci
+
+# - name: Connecting to wifi
+#   copy:
+#     src: templates/10-wpa_supplicant
+#     dest: /lib/dhcpcd/dhcpcd-hooks/10-wpa_supplicant
+#     owner: aci
+
+- name: Disable SSH password authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+  # notify: reboot
+
+- name: Get more space
+  command: raspi-config --expand-rootfs
+  become: yes
+  # notify:
+    # - reboot
+
+- name: Start hostapd
+  systemd:
+    name: hostapd
+    state: started
+    enabled: true
+    masked: false
+
+
+- name: Stop generic wpa_supplicant
+  systemd:
+    name: wpa_supplicant
+    state: stopped
+    enabled: false
+
+- name: Start specific wpa_supplicant@wlan0
+  systemd:
+      name: wpa_supplicant@wlan0
+      enabled: true
+      state: started
+
+- name: Make sure dnmasq is up
+  systemd:
+      name: dnsmasq
+      enabled: true
+      state: started

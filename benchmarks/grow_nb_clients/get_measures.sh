@@ -1,6 +1,6 @@
 #!/bin/sh
 
-declare -a arr=("1" "10" "100" "200" "500" "750" "1000")
+declare -a arr=("10" "100" "200" "500" "750" "1000")
 
 echo "get metrics for get and set on random keys according to number of requests"
 rm dataSETrpc.dat

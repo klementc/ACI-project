@@ -16,16 +16,16 @@ with open('dataSETrpc.dat','r') as file:
         for row in file:
                 row = row.strip().split(" ")
                 print(row)
-                x2.append(float(row[0]))
+                x2.append(row[0])
                 y2.append(float(row[1]))
 
 
 plt.xlabel('Number of requests')
-plt.ylabel('Duration to complete all requests (s)')
-plt.plot(x,y, marker="o")
+plt.ylabel('Requests per second')
+plt.bar(x2,y2, )
 #ax1.set_xscale("log")
 plt.legend()
-plt.savefig("grownbcl.pdf")
+plt.savefig("grownbcl2.pdf")
 
 #ax2 = ax1.twinx()
 #col='tab:blue'

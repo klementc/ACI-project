@@ -16,6 +16,6 @@ plt.ylabel('Duration to complete all requests (s)')
 plt.plot(x,y, marker="o")
 plt.xscale("log")
 plt.legend()
-plt.savefig("growreq.pdf")
+plt.savefig("grownbcl.pdf")
 
 

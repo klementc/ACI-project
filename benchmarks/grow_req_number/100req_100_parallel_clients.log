@@ -1,0 +1,35 @@
+SET: 0.00====== SET ======
+  100 requests completed in 0.03 seconds
+  100 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+1.00% <= 4 milliseconds
+5.00% <= 5 milliseconds
+9.00% <= 6 milliseconds
+12.00% <= 7 milliseconds
+16.00% <= 8 milliseconds
+20.00% <= 9 milliseconds
+24.00% <= 10 milliseconds
+28.00% <= 11 milliseconds
+32.00% <= 12 milliseconds
+36.00% <= 13 milliseconds
+40.00% <= 14 milliseconds
+44.00% <= 15 milliseconds
+49.00% <= 16 milliseconds
+53.00% <= 17 milliseconds
+58.00% <= 18 milliseconds
+62.00% <= 19 milliseconds
+66.00% <= 20 milliseconds
+70.00% <= 21 milliseconds
+74.00% <= 22 milliseconds
+78.00% <= 23 milliseconds
+82.00% <= 24 milliseconds
+87.00% <= 25 milliseconds
+91.00% <= 26 milliseconds
+95.00% <= 27 milliseconds
+99.00% <= 28 milliseconds
+100.00% <= 28 milliseconds
+3125.00 requests per second
+
+

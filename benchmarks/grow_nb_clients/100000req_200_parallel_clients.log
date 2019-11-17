@@ -1,0 +1,21 @@
+SET: 0.00SET: 15747.17SET: 15882.47SET: 15979.25SET: 15981.48SET: 16007.04SET: 16037.23SET: 16025.76SET: 15942.79SET: 15939.87SET: 15929.69SET: 15916.73SET: 15894.10SET: 15885.52SET: 15880.80SET: 15875.03SET: 15869.24SET: 15859.99SET: 15856.33SET: 15849.14SET: 15842.27SET: 15845.55SET: 15848.71SET: 15851.75SET: 15860.41====== SET ======
+  100000 requests completed in 6.31 seconds
+  200 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+0.00% <= 4 milliseconds
+0.02% <= 5 milliseconds
+7.63% <= 6 milliseconds
+96.74% <= 7 milliseconds
+99.70% <= 8 milliseconds
+99.79% <= 9 milliseconds
+99.84% <= 10 milliseconds
+99.88% <= 11 milliseconds
+99.89% <= 12 milliseconds
+99.90% <= 15 milliseconds
+99.91% <= 16 milliseconds
+100.00% <= 16 milliseconds
+15855.40 requests per second
+
+

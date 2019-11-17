@@ -1,0 +1,15 @@
+SET: 0.00SET: 21446.22SET: 21423.15SET: 21403.46SET: 21357.64SET: 21368.50SET: 21340.44SET: 21347.23SET: 21344.83SET: 21342.96SET: 21341.46SET: 21338.79SET: 21292.41SET: 21278.56SET: 21284.08SET: 21283.01SET: 21283.57SET: 21179.98SET: 21187.08====== SET ======
+  100000 requests completed in 4.75 seconds
+  10 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+99.38% <= 1 milliseconds
+99.94% <= 2 milliseconds
+99.98% <= 3 milliseconds
+99.99% <= 4 milliseconds
+100.00% <= 5 milliseconds
+100.00% <= 5 milliseconds
+21070.38 requests per second
+
+

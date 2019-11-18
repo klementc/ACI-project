@@ -8,7 +8,7 @@ for i in "${arr[@]}"
 do
    filename=${i}req_100_parallel_clients.log
    echo "values for $i: $filename"
-   redis-benchmark -p 6379 -r 100000 -n $i -c 100 -t set > $filename
+   redis-benchmark -p 6479 -r 100000 -n $i -c 100 -t set > $filename
 done
 
 

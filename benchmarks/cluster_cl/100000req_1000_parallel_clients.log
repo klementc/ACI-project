@@ -1,0 +1,79 @@
+SET: 0.00SET: 11590.78SET: 12709.15SET: 13181.51SET: 13086.28SET: 12892.04SET: 12773.99SET: 12711.52SET: 12627.55SET: 12587.85SET: 12540.23SET: 12511.72SET: 12476.63SET: 12431.95SET: 12418.20SET: 12394.64SET: 12378.87SET: 12368.94SET: 12354.43SET: 12346.39SET: 12338.75SET: 12330.45SET: 12325.23SET: 12307.62SET: 12304.86SET: 12297.71SET: 12293.79SET: 12286.38SET: 12279.72====== SET ======
+  100000 requests completed in 8.17 seconds
+  1000 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+0.00% <= 21 milliseconds
+0.00% <= 22 milliseconds
+0.01% <= 23 milliseconds
+0.03% <= 24 milliseconds
+0.07% <= 25 milliseconds
+0.12% <= 26 milliseconds
+0.19% <= 27 milliseconds
+0.30% <= 28 milliseconds
+0.48% <= 29 milliseconds
+0.68% <= 30 milliseconds
+0.91% <= 31 milliseconds
+1.14% <= 32 milliseconds
+1.40% <= 33 milliseconds
+1.68% <= 34 milliseconds
+1.98% <= 35 milliseconds
+2.26% <= 36 milliseconds
+2.54% <= 37 milliseconds
+2.75% <= 38 milliseconds
+3.01% <= 39 milliseconds
+3.88% <= 40 milliseconds
+27.41% <= 41 milliseconds
+75.62% <= 42 milliseconds
+85.06% <= 43 milliseconds
+87.88% <= 44 milliseconds
+89.22% <= 45 milliseconds
+90.10% <= 46 milliseconds
+90.82% <= 47 milliseconds
+91.37% <= 48 milliseconds
+91.93% <= 49 milliseconds
+92.42% <= 50 milliseconds
+92.85% <= 51 milliseconds
+93.26% <= 52 milliseconds
+93.60% <= 53 milliseconds
+93.99% <= 54 milliseconds
+94.36% <= 55 milliseconds
+94.75% <= 56 milliseconds
+95.11% <= 57 milliseconds
+95.47% <= 58 milliseconds
+95.82% <= 59 milliseconds
+96.17% <= 60 milliseconds
+96.54% <= 61 milliseconds
+96.92% <= 62 milliseconds
+97.27% <= 63 milliseconds
+97.60% <= 64 milliseconds
+97.92% <= 65 milliseconds
+98.22% <= 66 milliseconds
+98.46% <= 67 milliseconds
+98.67% <= 68 milliseconds
+98.86% <= 69 milliseconds
+99.07% <= 70 milliseconds
+99.18% <= 71 milliseconds
+99.31% <= 72 milliseconds
+99.46% <= 73 milliseconds
+99.59% <= 74 milliseconds
+99.65% <= 75 milliseconds
+99.68% <= 76 milliseconds
+99.71% <= 77 milliseconds
+99.78% <= 78 milliseconds
+99.82% <= 79 milliseconds
+99.84% <= 80 milliseconds
+99.85% <= 81 milliseconds
+99.89% <= 82 milliseconds
+99.90% <= 83 milliseconds
+99.92% <= 84 milliseconds
+99.94% <= 85 milliseconds
+99.95% <= 86 milliseconds
+99.96% <= 87 milliseconds
+99.97% <= 88 milliseconds
+99.99% <= 89 milliseconds
+100.00% <= 89 milliseconds
+12242.90 requests per second
+
+

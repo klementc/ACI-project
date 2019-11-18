@@ -10,12 +10,11 @@ with open('dataSET.dat','r') as file:
 		print(row)
 		x.append(float(row[0]))
 		y.append(float(row[1]))
-
-x2=[]
-y2=[]
-with open('../grow_req_number/dataSET.dat','r') as file:
+x2 = []
+y2 = []
+with open('dataSETrpc.dat','r') as file:
         for row in file:
-                row = row.strip().split("$
+                row = row.strip().split(" ")
                 print(row)
                 x2.append(float(row[0]))
                 y2.append(float(row[1]))
@@ -24,9 +23,15 @@ with open('../grow_req_number/dataSET.dat','r') as file:
 plt.xlabel('Number of requests')
 plt.ylabel('Duration to complete all requests (s)')
 plt.plot(x,y, marker="o")
-plt.plot(x,y, marker="*")
-plt.xscale("log")
+#ax1.set_xscale("log")
 plt.legend()
-plt.savefig("growreq.pdf")
+plt.savefig("grownbcl.pdf")
+
+#ax2 = ax1.twinx()
+#col='tab:blue'
+#ax2.set_ylabel('Duration to complete all requests (s)')
+#ax2.bar(x2,y2, color=col)
+
+
 
 

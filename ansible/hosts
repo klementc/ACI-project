@@ -1,18 +1,18 @@
 [rasp1]
-raspberrypi1 ansible_user=pi
+192.168.199.6 ansible_user=pi ansible_ssh_private_key_file=~/.ssh/aciproject
 
 [rasp1:vars]
-ipaddr=192.168.201.1
+ipmask=192.168.201
 
 
 [rasp2]
-raspberrypi3 ansible_user=pi
+192.168.199.7 ansible_user=pi ansible_ssh_private_key_file=~/.ssh/aciproject
 
 [rasp2:vars]
-ipaddr=192.168.202.1
+ipmask=192.168.202
 
 [rasp3]
-raspberrypi2 ansible_user=pi
+192.168.199.5 ansible_user=pi ansible_ssh_private_key_file=~/.ssh/aciproject
 
 [rasp3:vars]
-ipaddr=192.168.203.1
+ipmask=192.168.203

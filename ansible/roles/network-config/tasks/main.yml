@@ -8,12 +8,13 @@
       - dhcpd
       - iptables-persistent
       - quagga
-      - libsndfile
+      - sndfile-programs
     state: present
 
 - name: Installing Driver
   become: true
   script: templates/RPi-install-wifi.sh
+  ignore_errors: yes
 
 # - name: Setup Virtual Interface
 #   copy:
@@ -50,6 +51,28 @@
     src: templates/wpa_supplicant-wlan0.conf
     dest: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
     owner: aci
+
+- name: Adding env variables for wpa
+  replace:
+      path: /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+      regexp: '\$HOST_NET_MASK'
+      replace: "{{ ipmask }}"
+      owner: aci
+
+- name: Adding env variables dnsmasq
+  replace:
+      path: /etc/dnsmasq.conf
+      regexp: '\$HOST_NET_MASK'
+      replace: "{{ ipmask }}"
+      owner: aci
+
+
+- name: Adding env variables dnsmasq
+  replace:
+      path: /etc/network/interfaces.d/ap
+      regexp: '\$HOST_NET_MASK'
+      replace: "{{ ipmask }}"
+      owner: aci
 
 # - name: Connecting to wifi
 #   copy:

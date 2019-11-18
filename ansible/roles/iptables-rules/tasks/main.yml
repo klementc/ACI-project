@@ -18,8 +18,8 @@
       chain: POSTROUTING
       table: nat
       jump: MASQUERADE
-      destination: "! {{ ipaddr }}/24"
-      source: {{  ipaddr }}/24
+      destination: "! {{ ipmask }}.0/24"
+      source: "{{  ipmask }}/24"
 
   - name: save iptables
     command: iptables-save
@@ -29,6 +29,14 @@
     copy:
       src: templates/ospfd.conf
       dest: /etc/quagga/ospfd.conf
+      owner: aci
+
+
+  - name: Adding env variables ospf
+    replace:
+      path: /etc/quagga/ospfd.conf
+      regexp: '\$HOST_NET_MASK'
+      replace: "{{ ipmask }}"
       owner: aci
 
   - name: reboot

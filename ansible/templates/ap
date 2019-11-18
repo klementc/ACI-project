@@ -1,5 +1,5 @@
 allow-hotplug wlan1
 auto wlan1
 iface wlan1 inet static
-    address 192.168.201.1
+    address $HOST_NET_MASK.1
     netmask 255.255.255.0

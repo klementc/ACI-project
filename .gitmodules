@@ -1,0 +1,3 @@
+[submodule "ansible/roles/ansible-rpi-docker"]
+	path = ansible/roles/ansible-rpi-docker
+	url = https://gitlab.com/jls42/ansible-rpi-docker.git

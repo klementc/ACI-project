@@ -5,6 +5,8 @@
   roles:
     - user-setup
     - network-config
+    - ansible-rpi-docker
+    # - docker-setup
     - iptables-rules
 
   vars_prompt:

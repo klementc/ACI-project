@@ -8,10 +8,11 @@ destdir=/home/pi/soundMeter/dBValues.txt
 #loc="48.118169599999995:-1.6859136"
 
 helper_function() {
-	echo "./soundMeter <ipdb> <portdb> <loc> <pause>"
+	echo "./soundMeter <ipdb> <portdb> <loc> <recordduration> <pause>"
 	echo "ipdb: 0.0.0.0 for local db node"
 	echo "portdb: 6379 most of the time"
 	echo "loc: format like -29.5943:28.44332 (long:lat)"
+	echo "recordduration: for how long do we record sound"
 	echo "pause: time between samples"
 }
 
@@ -47,5 +48,5 @@ do
         fi
 
         echo `rm record.wav`
-        sleep $1
+        sleep $5
 done
